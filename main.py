@@ -10,21 +10,26 @@ app = FastAPI()
 def root():
     return {"Hello": "World"}
 
+
 @app.get("/reviews")
 def getreview():
     return 200
+
 
 @app.post("/review")
 def postreview():
     return 200
 
+
 @app.get("/location")
 def getfest():
     return 200
 
+
 @app.get("/reviewimage")
 def geturl():
     return 200
+
 
 def main() -> None:
     print("===== main() =====")
@@ -32,4 +37,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main() 
+    main()
