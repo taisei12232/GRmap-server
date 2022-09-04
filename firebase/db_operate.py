@@ -11,9 +11,6 @@ from firebase_admin import credentials, firestore
 from gcs import get_signed_url
 
 load_dotenv()
-print("FIREBASE_CRED:")
-print(str(os.getenv("FIREBASE_CRED")))
-print()
 with open("firebase/cred.json", "w") as f:
     f.write(str(os.getenv("FIREBASE_CRED")))
 
@@ -164,6 +161,3 @@ def get_reviews(fid):
         ),
     }
     return reviews
-
-
-os.remove("firebase/cred.json")
