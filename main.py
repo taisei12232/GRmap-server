@@ -1,3 +1,5 @@
+import os
+
 import uvicorn
 from fastapi import FastAPI
 
@@ -50,7 +52,13 @@ def post_test(data):
 
 
 def main() -> None:
-    uvicorn.run("main:app", host="0.0.0.0", port=8080, reload=True, workers=2)
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=os.environ.get("PORT", 5000),
+        reload=True,
+        workers=2,
+    )
 
 
 if __name__ == "__main__":
