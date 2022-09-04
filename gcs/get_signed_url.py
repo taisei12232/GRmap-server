@@ -6,8 +6,10 @@ from google.cloud import storage
 
 load_dotenv()
 
-with open('gcs/cred.json','w')as f:
-    f.write(os.getenv('GCS_CRED'))
+with open("gcs/cred.json", "w") as f:
+    f.write(str(os.getenv("GCS_CRED")))
+
+
 def generate_upload_signed_url(path, id):
     storage_client = storage.Client.from_service_account_json("gcs/cred.json")
     bucket = storage_client.bucket(os.getenv("BUCKET_NAME"))
@@ -20,5 +22,6 @@ def generate_upload_signed_url(path, id):
     )
 
     return url
+
 
 os.remove("gcs/cred.json")

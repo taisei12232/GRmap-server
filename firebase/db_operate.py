@@ -12,8 +12,8 @@ from gcs import get_signed_url
 
 load_dotenv()
 
-with open('firebase/cred.json','w')as f:
-    f.write(os.getenv('FIREBASE_CRED'))
+with open("firebase/cred.json", "w") as f:
+    f.write(str(os.getenv("FIREBASE_CRED")))
 
 cred = credentials.Certificate("firebase/cred.json")
 
@@ -162,5 +162,6 @@ def get_reviews(fid):
         ),
     }
     return reviews
+
 
 os.remove("firebase/cred.json")
