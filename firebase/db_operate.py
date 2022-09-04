@@ -114,12 +114,12 @@ def search_fest(lat, lng):
             )
             return {
                 "fid": doc.id,
-                "logo": data.logo,
+                "logo": data["logo"],
                 "area": [
                     data["area"]["position_ul"],
                     data["area"]["position_br"],
                 ],
-                "shops": data.shops,
+                "shops": data["shops"],
                 "reviewpositions": reviewpositions,
                 "accesses": data["accesses"][str(today.date())],
             }
