@@ -28,7 +28,7 @@ def post_review(data: Review):
 
 @app.get("/location")
 def get_fest(lat: float = 35.6554348, lng: float = 139.7607593):
-    res = db_operate.search_fest()
+    res = db_operate.search_fest(lat,lng)
     return res
 
 
