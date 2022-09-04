@@ -124,7 +124,12 @@ def search_fest(lat, lng):
                     data["area"]["position_ul"],
                     data["area"]["position_br"],
                 ],
-                "shops": list(map(lambda shop: {"sid":shop[0],**shop[1]},data["shop"].items())),
+                "shops": list(
+                    map(
+                        lambda shop: {"sid": shop[0], **shop[1]},
+                        data["shops"].items(),
+                    )
+                ),
                 "reviewpositions": reviewpositions,
                 "accesses": data["accesses"][str(today.date())],
             }
