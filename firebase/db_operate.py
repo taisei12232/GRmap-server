@@ -11,7 +11,7 @@ from firebase_admin import credentials, firestore
 from gcs import get_signed_url
 
 load_dotenv()
-
+print(str(os.getenv("FIREBASE_CRED")))
 with open("firebase/cred.json", "w") as f:
     f.write(str(os.getenv("FIREBASE_CRED")))
 
