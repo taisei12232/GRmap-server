@@ -20,7 +20,7 @@ cred = credentials.Certificate("firebase/cred.json")
 firebase_admin.initialize_app(
     cred,
     {
-        "databaseAuthVariableOverride": {"uid": os.getenv("UID")},
+        "databaseAuthVariableOverride": {"uid": os.getenv("AUTH_ID")},
     },
 )
 
