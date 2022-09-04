@@ -107,6 +107,7 @@ def search_fest(lat, lng):
             if str(today.date()) not in data["accesses"]:
                 data["accesses"][str(today.date())] = [0] * 24
             data["accesses"][str(today.date())][today.hour] += 1
+            db.collection("festivals").document(doc.id).set(data)
             reviewpositions = list(
                 map(
                     lambda review: {
