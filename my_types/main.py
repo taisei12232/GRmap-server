@@ -14,6 +14,13 @@ class Shop(BaseModel):
     position: List[float]
 
 
+class Fest(BaseModel):
+    name: str
+    logo: str
+    position_ul: List[float]
+    position_br: List[float]
+
+
 class Review(BaseModel):
     fid: str
     text: str

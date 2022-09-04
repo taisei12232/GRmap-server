@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from firebase import db_operate
-from my_types import HelloWorldModel, Review, ReviewImage, Shop
+from my_types import Fest, HelloWorldModel, Review, ReviewImage, Shop, Fest
 
 app = FastAPI()
 
@@ -58,6 +58,11 @@ def post_test(data):
     print(data)
     print(data.text)
     print(data["text"])
+
+
+@app.post("/fest")
+def post_fes(data: Fest):
+    return db_operate.create_festival(data)
 
 
 def main() -> None:

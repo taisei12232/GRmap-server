@@ -69,6 +69,7 @@ def create_festival(data):
         },
         "reviews": {},
         "shops": {},
+        "accesses": {},
     }
     doc_ref.set(fest)
     return doc_ref.id
