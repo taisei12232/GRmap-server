@@ -38,7 +38,7 @@ def add_review(data):
         "shop": data.sid,
         "date": datetime.datetime.now(ZoneInfo("Asia/Tokyo")),
         "color": doc["shops"][data.sid]["color"],
-        "pictuire": "https://storage.googleapis.com"
+        "picture": "https://storage.googleapis.com"
         + "/gourmap_bucket/reviewimages/"
         + rid
         + ".png",
