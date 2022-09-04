@@ -94,13 +94,9 @@ def search_fest(lat, lng):
     print(today.today())
     for doc in docs:
         data = doc.to_dict()
-        print(data["area"]["position_ul"][0] <= lat)
-        print(data["area"]["position_br"][0] >= lat)
-        print(data["area"]["position_ul"][1] <= lng)
-        print(data["area"]["position_br"][1] >= lng)
         if (
-            data["area"]["position_ul"][0] <= lat
-            and data["area"]["position_br"][0] >= lat
+            data["area"]["position_ul"][0] >= lat
+            and data["area"]["position_br"][0] <= lat
             and data["area"]["position_ul"][1] <= lng
             and data["area"]["position_br"][1] >= lng
         ):
