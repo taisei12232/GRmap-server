@@ -19,6 +19,7 @@ firebase-admin = "^5.3.0"
 tzdata = "^2022.2"
 google-cloud-storage = "^2.5.0"
 python-dotenv = "^0.21.0"
+pydantic = "^1.10.1"
 
 [tool.poetry.dev-dependencies]
 

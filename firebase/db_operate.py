@@ -1,5 +1,6 @@
 import datetime
 import os
+import random
 import uuid
 from zoneinfo import ZoneInfo
 
@@ -26,19 +27,29 @@ db = firestore.client()
 def add_review(data):
     doc_ref = db.collection("festivals").document(data.fid)
     doc = doc_ref.get().to_dict()
-    rid = uuid.uuid4()
+    rid = str(uuid.uuid4())
     signedurl = None
+    print(doc)
     doc["reviews"][rid] = {
         "position": data.position,
         "text": data.text,
         "shop": data.sid,
         "date": datetime.datetime.now(ZoneInfo("Asia/Tokyo")),
+        "color": doc["shops"][data.sid]["color"],
     }
+    doc_ref.set(doc)
     if data.haspicture:
         signedurl = get_signed_url.generate_upload_signed_url(
             "reviewimages", rid
         )
     return {"rid": rid, "signedurl": signedurl}
+
+
+def add_review_image(data):
+    doc_ref = db.collection("festivals").document(data.fid)
+    doc = doc_ref.get().to_dict()
+    doc["reviews"][data.rid]["picture"] = data.url
+    doc_ref.set(doc)
 
 
 def create_festival(data):
@@ -60,12 +71,91 @@ def create_festival(data):
 def add_shop(data):
     doc_ref = db.collection("festivals").document(data.fid)
     fest = doc_ref.get().to_dict()
-    sid = uuid.uuid4()
+    sid = str(uuid.uuid4())
     fest["shops"][sid] = {
         "name": data.name,
         "pamphlet": data.url,
         "position": data.position,
         "no": len(fest["shops"]) + 1,
+        "color": "#"
+        + ("0" + str(hex(random.randint(0, 255))[2:]))[-2:]
+        + ("0" + str(hex(random.randint(0, 255))[2:]))[-2:]
+        + ("0" + str(hex(random.randint(0, 255))[2:]))[-2:],
     }
     doc_ref.set(fest)
     return sid
+
+
+def search_fest(lat, lng):
+    docs = db.collection("festivals").stream()
+    today = datetime.datetime.now(ZoneInfo("Asia/Tokyo"))
+    print(today.today())
+    for doc in docs:
+        data = doc.to_dict()
+        if (
+            data["area"]["position_ul"][0]
+            <= lat & data["area"]["position_br"][0]
+            >= lat & data["area"]["position_ul"][1]
+            <= lng & data["area"]["position_br"][1]
+            >= lng
+        ):
+            if str(today.date()) not in data["accesses"]:
+                data["accesses"][str(today.date())] = [0] * 24
+            data["accesses"][str(today.date())][today.hour] += 1
+            reviewpositions = list(
+                map(
+                    lambda review: {
+                        "position": review["position"],
+                        "color": data["shops"][review["shop"]],
+                    },
+                    data["reviews"].values(),
+                )
+            )
+            return {
+                "fid": doc.id,
+                "logo": data.logo,
+                "area": [
+                    data["area"]["position_ul"],
+                    data["area"]["position_br"],
+                ],
+                "shops": data.shops,
+                "reviewpositions": reviewpositions,
+                "accesses": data["accesses"][str(today.date())],
+            }
+    return None
+
+
+def get_reviews(fid):
+    doc_ref = db.collection("festivals").document(fid)
+    fest = doc_ref.get().to_dict()
+    reviews = {
+        "shoplist": list(
+            map(
+                lambda shop: {"value": shop[0], "label": shop[1]["name"]},
+                fest["shops"].items(),
+            )
+        ),
+        "reviews": list(
+            map(
+                lambda review: {
+                    "rid": review[0],
+                    "sid": review[1]["shop"],
+                    "text": review[1]["text"],
+                    "picture": review[1]["picture"],
+                    "shopno": fest["shops"][review[1]["shop"]]["no"],
+                    "shopname": fest["shops"][review[1]["shop"]]["name"],
+                    "shopcolor": fest["shops"][review[1]["shop"]]["color"],
+                },
+                fest["reviews"].items(),
+            )
+        ),
+        "pamphlets": dict(
+            zip(
+                fest["shops"].keys(),
+                list(
+                    map(lambda shop: shop["pamphlet"], fest["shops"].values())
+                ),
+            )
+        ),
+    }
+    return reviews
