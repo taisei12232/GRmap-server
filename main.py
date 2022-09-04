@@ -50,7 +50,6 @@ def post_test(data):
 
 
 def main() -> None:
-    print("===== main() =====")
     uvicorn.run("main:app", host="0.0.0.0", port=8080, reload=True, workers=2)
 
 
