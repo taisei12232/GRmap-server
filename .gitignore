@@ -14,5 +14,7 @@ __pycache__/
 .vscode/
 
 firebase/cred.json
-
+gcs/cred.json
 api.json
+
+.env

@@ -1,6 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 
+from firebase import db_operate
 from my_types import HelloWorldModel
 
 app = FastAPI()
@@ -12,23 +13,36 @@ def root():
 
 
 @app.get("/reviews")
-def getreview():
+def get_review():
     return 200
 
 
 @app.post("/review")
-def postreview():
-    return 200
+def post_review(data):
+    res = db_operate.add_review(data)
+    return res
 
 
 @app.get("/location")
-def getfest():
+def get_fest():
     return 200
 
 
 @app.get("/reviewimage")
-def geturl():
+def get_url():
     return 200
+
+
+@app.post("/shop")
+def add_shop(data):
+    return db_operate.add_shop(data)
+
+
+@app.post("/test")
+def post_test(data):
+    print(data)
+    print(data.text)
+    print(data["text"])
 
 
 def main() -> None:
