@@ -95,11 +95,10 @@ def search_fest(lat, lng):
     for doc in docs:
         data = doc.to_dict()
         if (
-            data["area"]["position_ul"][0]
-            <= lat & data["area"]["position_br"][0]
-            >= lat & data["area"]["position_ul"][1]
-            <= lng & data["area"]["position_br"][1]
-            >= lng
+            data["area"]["position_ul"][0] <= lat
+            and data["area"]["position_br"][0] >= lat
+            and data["area"]["position_ul"][1] <= lng
+            and data["area"]["position_br"][1] >= lng
         ):
             if str(today.date()) not in data["accesses"]:
                 data["accesses"][str(today.date())] = [0] * 24
