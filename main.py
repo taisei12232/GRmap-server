@@ -2,11 +2,20 @@ import os
 
 import uvicorn
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
 
 from firebase import db_operate
 from my_types import HelloWorldModel, Review, ReviewImage, Shop
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,  # 追記により追加
+    allow_methods=["*"],  # 追記により追加
+    allow_headers=["*"],  # 追記により追加
+)
 
 
 @app.get("/", response_model=HelloWorldModel)
