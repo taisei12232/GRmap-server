@@ -38,13 +38,17 @@ def add_review(data):
         "shop": data.sid,
         "date": datetime.datetime.now(ZoneInfo("Asia/Tokyo")),
         "color": doc["shops"][data.sid]["color"],
+        "pictuire": "https://storage.googleapis.com"
+        + "/gourmap_bucket/reviewimages/"
+        + rid
+        + ".png",
     }
     doc_ref.set(doc)
     if data.haspicture:
         signedurl = get_signed_url.generate_upload_signed_url(
             "reviewimages", rid
         )
-    return {"rid": rid, "signedurl": signedurl}
+    return {"signedurl": signedurl}
 
 
 def add_review_image(data):
@@ -107,7 +111,7 @@ def search_fest(lat, lng):
                 map(
                     lambda review: {
                         "position": review["position"],
-                        "color": data["shops"][review["shop"]],
+                        "color": data["shops"][review["shop"]]["color"],
                     },
                     data["reviews"].values(),
                 )
