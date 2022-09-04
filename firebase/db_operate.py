@@ -64,8 +64,8 @@ def create_festival(data):
         "name": data.name,
         "logo": data.logo,
         "area": {
-            "position_ul": [data.position_ul],
-            "position_br": [data.position_br],
+            "position_ul": data.position_ul,
+            "position_br": data.position_br,
         },
         "reviews": {},
         "shops": {},

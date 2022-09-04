@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from firebase import db_operate
-from my_types import Fest, HelloWorldModel, Review, ReviewImage, Shop, Fest
+from my_types import Fest, HelloWorldModel, Review, ReviewImage, Shop
 
 app = FastAPI()
 
