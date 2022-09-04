@@ -153,7 +153,6 @@ def get_reviews(fid):
                     "rid": review[0],
                     "sid": review[1]["shop"],
                     "text": review[1]["text"],
-                    "picture": review[1]["picture"],
                     "shopno": fest["shops"][review[1]["shop"]]["no"],
                     "shopname": fest["shops"][review[1]["shop"]]["name"],
                     "shopcolor": fest["shops"][review[1]["shop"]]["color"],
